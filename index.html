@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Leigh Fermors in Mani</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/proj4.js"></script>
+        <script src="js/proj4leaflet.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/hikes_2.js"></script>
+        <script src="data/lcps_3.js"></script>
+        <script src="data/reconstructed_route_4.js"></script>
+        <script src="data/waypoints_5.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            continuousWorld: false,
+            worldCopyJump: false,
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[36.38955589447376,22.2069089160514],[36.69657480227835,22.68616547775781]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Positronnolabels_0');
+        map.getPane('pane_Positronnolabels_0').style.zIndex = 400;
+        var layer_Positronnolabels_0 = L.tileLayer('http://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+            pane: 'pane_Positronnolabels_0',
+            opacity: 1.0,
+            attribution: '<a href="https://cartodb.com/basemaps/">Map tiles by CartoDB, under CC BY 3.0. Data by OpenStreetMap, under ODbL.</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 20
+        });
+        layer_Positronnolabels_0;
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
+        function pop_hikes_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Leg</th>\
+                        <td>' + (feature.properties['Leg'] !== null ? autolinker.link(feature.properties['Leg'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Route</th>\
+                        <td>' + (feature.properties['Route'] !== null ? autolinker.link(feature.properties['Route'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distance</th>\
+                        <td>' + (feature.properties['Distance'] !== null ? autolinker.link(feature.properties['Distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Time_hours</th>\
+                        <td>' + (feature.properties['Time_hours'] !== null ? autolinker.link(feature.properties['Time_hours'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_hikes_2_0() {
+            return {
+                pane: 'pane_hikes_2',
+                opacity: 1,
+                color: 'rgba(53,178,249,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_hikes_2');
+        map.getPane('pane_hikes_2').style.zIndex = 402;
+        map.getPane('pane_hikes_2').style['mix-blend-mode'] = 'normal';
+        var layer_hikes_2 = new L.geoJson(json_hikes_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_hikes_2',
+            layerName: 'layer_hikes_2',
+            pane: 'pane_hikes_2',
+            onEachFeature: pop_hikes_2,
+            style: style_hikes_2_0,
+        });
+        bounds_group.addLayer(layer_hikes_2);
+        map.addLayer(layer_hikes_2);
+        function pop_lcps_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Leg</th>\
+                        <td>' + (feature.properties['Leg'] !== null ? autolinker.link(feature.properties['Leg'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Route</th>\
+                        <td>' + (feature.properties['Route'] !== null ? autolinker.link(feature.properties['Route'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distance</th>\
+                        <td>' + (feature.properties['Distance'] !== null ? autolinker.link(feature.properties['Distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Time_hours</th>\
+                        <td>' + (feature.properties['Time_hours'] !== null ? autolinker.link(feature.properties['Time_hours'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_lcps_3_0() {
+            return {
+                pane: 'pane_lcps_3',
+                opacity: 1,
+                color: 'rgba(234,0,164,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_lcps_3');
+        map.getPane('pane_lcps_3').style.zIndex = 403;
+        map.getPane('pane_lcps_3').style['mix-blend-mode'] = 'normal';
+        var layer_lcps_3 = new L.geoJson(json_lcps_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_lcps_3',
+            layerName: 'layer_lcps_3',
+            pane: 'pane_lcps_3',
+            onEachFeature: pop_lcps_3,
+            style: style_lcps_3_0,
+        });
+        bounds_group.addLayer(layer_lcps_3);
+        map.addLayer(layer_lcps_3);
+        function pop_reconstructed_route_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Leg</th>\
+                        <td>' + (feature.properties['Leg'] !== null ? autolinker.link(feature.properties['Leg'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Route</th>\
+                        <td>' + (feature.properties['Route'] !== null ? autolinker.link(feature.properties['Route'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Distance</th>\
+                        <td>' + (feature.properties['Distance'] !== null ? autolinker.link(feature.properties['Distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_reconstructed_route_4_0() {
+            return {
+                pane: 'pane_reconstructed_route_4',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'round',
+                lineJoin: 'round',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_reconstructed_route_4');
+        map.getPane('pane_reconstructed_route_4').style.zIndex = 404;
+        map.getPane('pane_reconstructed_route_4').style['mix-blend-mode'] = 'normal';
+        var layer_reconstructed_route_4 = new L.geoJson(json_reconstructed_route_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_reconstructed_route_4',
+            layerName: 'layer_reconstructed_route_4',
+            pane: 'pane_reconstructed_route_4',
+            onEachFeature: pop_reconstructed_route_4,
+            style: style_reconstructed_route_4_0,
+        });
+        bounds_group.addLayer(layer_reconstructed_route_4);
+        map.addLayer(layer_reconstructed_route_4);
+        function pop_waypoints_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Name</th>\
+                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_waypoints_5_0() {
+            return {
+                pane: 'pane_waypoints_5',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_waypoints_5');
+        map.getPane('pane_waypoints_5').style.zIndex = 405;
+        map.getPane('pane_waypoints_5').style['mix-blend-mode'] = 'normal';
+        var layer_waypoints_5 = new L.geoJson(json_waypoints_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_waypoints_5',
+            layerName: 'layer_waypoints_5',
+            pane: 'pane_waypoints_5',
+            onEachFeature: pop_waypoints_5,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_waypoints_5_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_waypoints_5);
+        map.addLayer(layer_waypoints_5);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        var title = new L.Control();
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>The Leigh Fermors’ Journey through the Deep Mani in 1951</h2>';
+        };
+        title.addTo(map);
+        var abstract = new L.Control({'position':'topright'});
+        L.control.layers({"Streets": layer_OSMStandard_1,"Grayscale": layer_Positronnolabels_0,},{'<img src="legend/reconstructed_route_4.png" /> Likely Route': layer_reconstructed_route_4,'<img src="legend/lcps_3.png" /> LCPs': layer_lcps_3,'<img src="legend/hikes_2.png" /> Hikes': layer_hikes_2}).addTo(map);
+        setBounds();
+
+        </script>
+    </body>
+</html>
