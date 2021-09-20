@@ -18,7 +18,7 @@
             margin: 0;
         }
         </style>
-        <title>Leigh Fermors in Mani</title>
+        <title>The Leigh Fermors in Mani</title>
     </head>
     <body>
         <div id="map">
@@ -346,7 +346,7 @@
                 this._div.innerHTML = 'The Leigh Fermors’ Journey through the Deep Mani in 1951 <br> <br> <a href="https://github.com/rmseifried/leigh-fermors">View this map in GitHub</a>';
         };
         abstract.addTo(map);
-        L.control.layers({"Streets": layer_OSMStandard_1, "Satellite": layer_ESRISatellite_0},{'<img src="legend/reconstructed_route_4.png" /> Likely Route': layer_reconstructed_route_4,'<img src="legend/lcps_3.png" /> LCPs': layer_lcps_3,'<img src="legend/hikes_2.png" /> Hikes': layer_hikes_2}).addTo(map);
+        L.control.layers({"Streets": layer_OSMStandard_1, "Satellite": layer_ESRISatellite_0},{'<img src="legend/reconstructed_route_4.png" /> Likely Route': layer_reconstructed_route_4,'<img src="legend/lcps_3.png" /> LCPs': layer_lcps_3,'<img src="legend/hikes_2.png" /> Hikes': layer_hikes_2}, {collapsed: false}).addTo(map);
         setBounds();
 
         </script>
