@@ -60,7 +60,7 @@
             continuousWorld: false,
             worldCopyJump: false,
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[36.38955589447376,22.2069089160514],[36.69657480227835,22.68616547775781]]);
+        }).fitBounds([[36.339226,22.305707],[36.733143,22.573498]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -68,19 +68,19 @@
         function setBounds() {
         }
 
-        map.createPane('pane_OSMStandard_1');
-        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
-        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_OSMStandard_1',
+        map.createPane('pane_EsriWorldTopoMap');
+        map.getPane('pane_EsriWorldTopoMap').style.zIndex = 401;
+        var layer_EsriWorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png', {
+            pane: 'pane_EsriWorldTopoMap',
             opacity: 1.0,
-            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
             maxNativeZoom: 19
         });
-        layer_OSMStandard_1;
-        map.addLayer(layer_OSMStandard_1);
+        layer_EsriWorldTopoMap;
+        map.addLayer(layer_EsriWorldTopoMap);
 
         map.createPane('pane_ESRISatellite_0');
         map.getPane('pane_ESRISatellite_0').style.zIndex = 400;
@@ -94,6 +94,19 @@
             maxNativeZoom: 20
         });
         layer_ESRISatellite_0;
+
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
 
         function pop_hikes_2(feature, layer) {
             layer.on({
@@ -346,7 +359,7 @@
                 this._div.innerHTML = 'The Leigh Fermors’ Journey through the Deep Mani in 1951 <br> <br> <a href="https://github.com/rmseifried/leigh-fermors">View this map in GitHub</a>';
         };
         abstract.addTo(map);
-        L.control.layers({"Streets": layer_OSMStandard_1, "Satellite": layer_ESRISatellite_0},{'<img src="legend/reconstructed_route_4.png" /> Likely route': layer_reconstructed_route_4,'<img src="legend/lcps_3.png" /> Least cost paths': layer_lcps_3,'<img src="legend/hikes_2.png" /> Hikes': layer_hikes_2}, {collapsed: false}).addTo(map);
+        L.control.layers({"Topography": layer_EsriWorldTopoMap, "Satellite": layer_ESRISatellite_0, "OpenStreetMap": layer_OSMStandard_1},{'<img src="legend/reconstructed_route_4.png" /> Likely route': layer_reconstructed_route_4,'<img src="legend/lcps_3.png" /> Least cost paths': layer_lcps_3,'<img src="legend/hikes_2.png" /> Hikes': layer_hikes_2}, {collapsed: false}).addTo(map);
         setBounds();
 
         </script>
