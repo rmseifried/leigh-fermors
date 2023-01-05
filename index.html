@@ -62,7 +62,9 @@
         var map = L.map('map', {
             continuousWorld: false,
             worldCopyJump: false,
-            zoomControl:true, maxZoom:28, minZoom:1
+            zoomControl:false,
+            maxZoom:28,
+            minZoom:1
         }).fitBounds([[36.339226,22.305707],[36.733143,22.573498]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -451,6 +453,45 @@
 
         <!-- Create layer controller and other add-ons -->
 
+        var baseMaps = {};
+
+        var title = new L.Control({'position':'topleft'});
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>The Leigh Fermors\' Journey through the Deep Mani in 1951</h2>';
+        };
+        title.addTo(map);
+
+        var abstract = new L.Control({'position':'topleft'});
+        abstract.onAdd = function (map) {
+            this._div = L.DomUtil.create('div',
+            'leaflet-control abstract');
+            this._div.id = 'abstract'
+            this._div.setAttribute("onmouseenter", "abstract.show()");
+            this._div.setAttribute("onmouseleave", "abstract.hide()");
+            this.hide();
+            return this._div;
+            };
+            abstract.hide = function () {
+              this._div.classList.remove("abstractUncollapsed");
+              this._div.classList.add("abstract");
+              this._div.innerHTML = 'i'
+            }
+            abstract.show = function () {
+                this._div.classList.remove("abstract");
+                this._div.classList.add("abstractUncollapsed");
+                this._div.innerHTML = "Patrick (Paddy) and Joan Leigh Fermors' first trip through the Deep Mani in the southern Peloponnese, Greece. For more information about the data and methodology behind this map, see the article Mapping the Leigh Fermors’ Journey through the Deep Mani in 1951 by R.M. Seifried, C.A.M. Gardner, and M. Tatum (link will be added when it is published). Data for the web map are available on <a href='https://github.com/rmseifried/leigh-fermors'>GitHub</a>.";
+        };
+        abstract.addTo(map);
+
+        L.control.zoom({
+          position: 'topleft'
+        }).addTo(map);
+
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
@@ -461,24 +502,10 @@
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
-        var baseMaps = {};
-        var abstract = new L.Control({'position':'bottomright'});
-        abstract.onAdd = function (map) {
-            this._div = L.DomUtil.create('div',
-            'leaflet-control abstract');
-            this._div.id = 'abstract'
 
-                abstract.show();
-                return this._div;
-            };
-            abstract.show = function () {
-                this._div.classList.remove("abstract");
-                this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = 'The Leigh Fermors’ Journey through the Deep Mani in 1951 <br> <br> <a href="https://github.com/rmseifried/leigh-fermors">View this map in GitHub</a>';
-        };
-        abstract.addTo(map);
-        L.control.layers({"Topography": layer_EsriWorldTopoMap, "Satellite": layer_ESRISatellite_0, "OpenStreetMap": layer_OSMStandard_1},{'<img src="legend/reconstructed_route_5.png" /> Leigh Fermors\' route': layer_reconstructed_route_5,'<img src="legend/lcps_4.png" /> Least-cost paths': layer_lcps_4,'<img src="legend/hikes_3.png" /> CARTography hikes': layer_hikes_3,'<img src="legend/modern_roads_2.png" /> Modern roads': layer_modern_roads_2,'<img src="legend/premodern_paths_1.png" /> Premodern paths': layer_premodern_paths_1}, {collapsed: false}).addTo(map);
+        L.control.layers({"Topography": layer_EsriWorldTopoMap, "Satellite": layer_ESRISatellite_0, "OpenStreetMap": layer_OSMStandard_1},{'<img src="legend/reconstructed_route_5.png" /> Leigh Fermors\' route': layer_reconstructed_route_5,'<img src="legend/lcps_4.png" /> Least-cost paths': layer_lcps_4,'<img src="legend/hikes_3.png" /> CARTography hikes': layer_hikes_3,'<img src="legend/modern_roads_2.png" /> Modern roads': layer_modern_roads_2,'<img src="legend/premodern_paths_1.png" /> Premodern paths': layer_premodern_paths_1}, {collapsed: true, 'position':'topright'}).addTo(map);
         setBounds();
+
 
         </script>
     </body>
