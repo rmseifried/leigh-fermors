@@ -267,7 +267,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 /* general typography */
 .leaflet-container {
-	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font: 12px/1.5 'Open Sans', Arial, Helvetica, sans-serif;
 	}
 
 
@@ -346,6 +346,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 	background: #fff;
 	border-radius: 5px;
+	font-size: 14px;
 	}
 .leaflet-control-layers-toggle {
 	background-image: url(images/layers.png);
@@ -472,6 +473,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	padding: 1px;
 	text-align: left;
 	border-radius: 12px;
+	font-size: 14px;
 	}
 .leaflet-popup-content {
 	margin: 13px 19px;
