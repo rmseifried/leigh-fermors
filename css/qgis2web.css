@@ -11,7 +11,7 @@
             padding-right: 10px;
             padding-bottom: 6px;
             padding-left: 10px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
+            font: 14px/16px 'Open Sans', Arial, Helvetica, sans-serif;
             color: #000000 !important;
             background-color:#f8f8f8 !important;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -27,7 +27,7 @@
         }
         .leaflet-popup-content {
             width:auto;
-            padding-right:10px;
+            padding-right:5px;
         }
         .leaflet-tooltip {
             background: none;
@@ -65,12 +65,12 @@
         }
         .abstractUncollapsed {
             padding: 6px 8px;
-            font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+            font: 14px/1.5 'Open Sans', Arial, Helvetica, sans-serif;
             background-color:#f8f8f8 !important;
             color: #000000 !important;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 4px;
-            max-width: 40%;
+            max-width: 60%;
         }
         .leaflet-touch .leaflet-control-layers,
         .leaflet-touch .leaflet-bar,

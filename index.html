@@ -50,11 +50,11 @@
 
             if (e.target.feature.geometry.type === 'LineString') {
               highlightLayer.setStyle({
-                color: '#ffff00',
+                color: '#ff0000',
               });
             } else {
               highlightLayer.setStyle({
-                fillColor: '#ffff00',
+                fillColor: '#ff0000',
                 fillOpacity: 1
               });
             }
@@ -75,19 +75,19 @@
 
         <!-- Add overlays / base maps -->
 
-        map.createPane('pane_EsriWorldTopoMap');
-        map.getPane('pane_EsriWorldTopoMap').style.zIndex = 401;
-        var layer_EsriWorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png', {
-            pane: 'pane_EsriWorldTopoMap',
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
             opacity: 1.0,
-            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
             maxNativeZoom: 19
         });
-        layer_EsriWorldTopoMap;
-        map.addLayer(layer_EsriWorldTopoMap);
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
 
         map.createPane('pane_ESRISatellite_0');
         map.getPane('pane_ESRISatellite_0').style.zIndex = 400;
@@ -102,18 +102,18 @@
         });
         layer_ESRISatellite_0;
 
-        map.createPane('pane_OSMStandard_1');
-        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
-        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_OSMStandard_1',
+        map.createPane('pane_EsriWorldTopoMap');
+        map.getPane('pane_EsriWorldTopoMap').style.zIndex = 401;
+        var layer_EsriWorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}.png', {
+            pane: 'pane_EsriWorldTopoMap',
             opacity: 1.0,
-            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community',
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
             maxNativeZoom: 19
         });
-        layer_OSMStandard_1;
+        layer_EsriWorldTopoMap;
 
         <!-- Add layers and set pop-up behavior -->
 
@@ -249,7 +249,7 @@
                         <td>' + (feature.properties['Time'] !== null ? autolinker.link(feature.properties['Time'].toLocaleString()) : '') + ' hours' + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup("<b>CARTography hike</b><hr>" + popupContent, {maxHeight: 400});
         }
 
         function style_hikes_3_0() {
@@ -307,7 +307,7 @@
                         <td>' + (feature.properties['Time'] !== null ? autolinker.link(feature.properties['Time'].toLocaleString()) : '') + ' hours' + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup("<b>Least-cost path</b><hr>" + popupContent, {maxHeight: 400});
         }
 
         function style_lcps_4_0() {
@@ -365,7 +365,7 @@
                         <td>' + (feature.properties['Means'] !== null ? autolinker.link(feature.properties['Means'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup("<b>Leigh Fermor's route</b><hr>" + popupContent, {maxHeight: 400});
         }
 
         function style_reconstructed_route_5_0() {
@@ -405,19 +405,14 @@
                 },
                 mouseover: highlightFeature,
             });
-            var popupContent = '<table>\
-                    <tr>\
-                        <th scope="row">Name</th>\
-                        <td>' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                </table>';
+            var popupContent = (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '')
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
         function style_waypoints_6_0() {
             return {
                 pane: 'pane_waypoints_6',
-                radius: 4.0,
+                radius: 6.0,
                 opacity: 1,
                 color: 'rgba(255,255,255,1.0)',
                 dashArray: '',
@@ -462,7 +457,7 @@
             return this._div;
         };
         title.update = function () {
-            this._div.innerHTML = '<h2>The Leigh Fermors\' Journey through the Deep Mani in 1951</h2>';
+            this._div.innerHTML = '<h2>The Leigh Fermors\' Journey through Mani in 1951</h2>';
         };
         title.addTo(map);
 
@@ -484,9 +479,12 @@
             abstract.show = function () {
                 this._div.classList.remove("abstract");
                 this._div.classList.add("abstractUncollapsed");
-                this._div.innerHTML = "Patrick (Paddy) and Joan Leigh Fermors' first trip through the Deep Mani in the southern Peloponnese, Greece. For more information about the data and methodology behind this map, see the article Mapping the Leigh Fermors’ Journey through the Deep Mani in 1951 by R.M. Seifried, C.A.M. Gardner, and M. Tatum (link will be added when it is published). Data for the web map are available on <a href='https://github.com/rmseifried/leigh-fermors'>GitHub</a>.";
+                this._div.innerHTML = "Map of Patrick (Paddy) and Joan Leigh Fermors' first trip through the Deep Mani in the southern Peloponnese, Greece, in July 1951. For more information about the data and methodology behind this map, see the article <em>Mapping the Leigh Fermors’ Journey through the Deep Mani in 1951</em> by R.M. Seifried, C.A.M. Gardner, and M. Tatum (link will be added when it is published). Data for the web map are available on <a href='https://github.com/rmseifried/leigh-fermors'>GitHub</a>.";
         };
         abstract.addTo(map);
+
+        L.control.layers({"OpenStreetMap": layer_OSMStandard_1, "Satellite": layer_ESRISatellite_0, "Topography": layer_EsriWorldTopoMap},{'<img src="legend/reconstructed_route_5.png" /> Leigh Fermors\' route': layer_reconstructed_route_5,'<img src="legend/lcps_4.png" /> Least-cost paths': layer_lcps_4,'<img src="legend/hikes_3.png" /> CARTography hikes': layer_hikes_3,'<img src="legend/modern_roads_2.png" /> Modern roads': layer_modern_roads_2,'<img src="legend/premodern_paths_1.png" /> Premodern paths': layer_premodern_paths_1}, {collapsed: true, 'position':'topleft'}).addTo(map);
+        setBounds();
 
         L.control.zoom({
           position: 'topleft'
@@ -502,9 +500,6 @@
         .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
-
-        L.control.layers({"Topography": layer_EsriWorldTopoMap, "Satellite": layer_ESRISatellite_0, "OpenStreetMap": layer_OSMStandard_1},{'<img src="legend/reconstructed_route_5.png" /> Leigh Fermors\' route': layer_reconstructed_route_5,'<img src="legend/lcps_4.png" /> Least-cost paths': layer_lcps_4,'<img src="legend/hikes_3.png" /> CARTography hikes': layer_hikes_3,'<img src="legend/modern_roads_2.png" /> Modern roads': layer_modern_roads_2,'<img src="legend/premodern_paths_1.png" /> Premodern paths': layer_premodern_paths_1}, {collapsed: true, 'position':'topright'}).addTo(map);
-        setBounds();
 
 
         </script>
