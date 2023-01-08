@@ -9,13 +9,17 @@
         .info {
             padding-top: 10px;
             padding-right: 10px;
-            padding-bottom: 6px;
+            padding-bottom: 5px;
             padding-left: 10px;
-            font: 14px/16px 'Open Sans', Arial, Helvetica, sans-serif;
+            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
             color: #000000 !important;
             background-color:#f8f8f8 !important;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 4px;
+            text-align: center;
+            margin-right: 10px;
         }
         .info h2 {
             margin: 0 0 5px;
@@ -65,7 +69,9 @@
         }
         .abstractUncollapsed {
             padding: 6px 8px;
-            font: 14px/1.5 'Open Sans', Arial, Helvetica, sans-serif;
+            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
             background-color:#f8f8f8 !important;
             color: #000000 !important;
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
