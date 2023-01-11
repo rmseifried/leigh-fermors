@@ -55,6 +55,8 @@
             color: #000000 !important;
         }
 
+        /* Modify collapsed abstract and format for mobile devices */ 
+
         .abstract {
             font: bold 18px 'Lucida Console', Monaco, monospace;
             text-indent: 1px;
@@ -78,6 +80,9 @@
             border-radius: 4px;
             max-width: 60%;
         }
+        .leaflet-touch .abstract
+        .leaflet-touch .abstractUncollapsed
+
         .leaflet-touch .leaflet-control-layers,
         .leaflet-touch .leaflet-bar,
         .leaflet-control-search,
