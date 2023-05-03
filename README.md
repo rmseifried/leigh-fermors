@@ -1,6 +1,6 @@
 # The Leigh Fermors' journey through Mani in 1951
 
-This is a web map of Patrick (Paddy) and Joan Leigh Fermors' first trip through the Deep Mani (in the southern Peloponnese, Greece). For more information about the data and methodology, see the article "Mapping the Leigh Fermors’ Journey through the Deep Mani in 1951" (currently in review - link will be added when it is available).
+This is a web map of Patrick (Paddy) and Joan Leigh Fermors' first trip through the Deep Mani (in the southern Peloponnese, Greece). For more information about the data and methodology, see the article "Mapping the Leigh Fermors’ Journey through the Deep Mani in 1951" (https://doi.org/10.1017/S0068245423000023).
 
 **Leigh Fermors' route** - the most probably route that the couple followed from Limeni (in the northwest part of the Deep Mani) to Kotronas (in the northeast). They walked most of the route on foot, but also took a bus and a boat for sections of the journey.
 
